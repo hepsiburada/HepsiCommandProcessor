@@ -74,7 +74,6 @@ Task RunTests -Depends Compile {
 
 	$project = "Hepsi.CommandProcessor.UnitTests"
 	.$nunit "$output_directory\$project.dll" /noxml
-	mkdir $dist_directory -ea SilentlyContinue
 }
 
 Task CreateNuGetPackage -Depends Compile {
@@ -97,6 +96,7 @@ Task CreateNuGetPackage -Depends Compile {
 		$packageVersion = $packageVersion + "-build" + $buildNumber.ToString().PadLeft(5,'0')
 	}
 
+	mkdir $dist_directory -ea SilentlyContinue
 	copy-item $src_directory\Hepsi.CommandProcessor\Hepsi.CommandProcessor.nuspec $dist_directory
 	exec { . $nuget pack $dist_directory\Hepsi.CommandProcessor.nuspec -BasePath $dist_directory -o $dist_directory -version $packageVersion }
 }
