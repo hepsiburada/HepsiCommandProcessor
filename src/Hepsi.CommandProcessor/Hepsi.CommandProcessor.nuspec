@@ -20,6 +20,6 @@
     </dependencies>
   </metadata>
   <files>
-    <file src="build\Hepsi.CommandProcessor.dll" target="lib\net45" />
+    <file src="..\build\Hepsi.CommandProcessor.dll" target="lib\net45" />
   </files>
 </package>

@@ -23,6 +23,8 @@ bld/
 [Bb]in/
 [Oo]bj/
 !**/Carbon/bin
+[Bb]uild/
+[Dd]istribution
 
 # MSTest test Results
 [Tt]est[Rr]esult*/

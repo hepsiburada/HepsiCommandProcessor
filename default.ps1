@@ -28,7 +28,7 @@ Properties {
 
 ## Tasks
 
-Task default -Depends CreateNuGetPackage
+Task default -Depends RunTests
 Task appVeyor -Depends CreateNuGetPackage
 
 Task Restore {
@@ -92,10 +92,11 @@ Task CreateNuGetPackage -Depends RunTests {
 	if($preRelease){
 		$packageVersion = "$packageVersion-$preRelease"
 	}
-	
+
 	if ($buildNumber -ne 0){
 		$packageVersion = $packageVersion + "-build" + $buildNumber.ToString().PadLeft(5,'0')
 	}
 
 	copy-item $src_directory\Hepsi.CommandProcessor\Hepsi.CommandProcessor.nuspec $dist_directory
+	exec { . $nuget pack $dist_directory\Hepsi.CommandProcessor.nuspec -BasePath $dist_directory -o $dist_directory -version $packageVersion }
 }
