@@ -28,8 +28,8 @@ Properties {
 
 ## Tasks
 
-Task default -Depends RunTests
-Task appVeyor -Depends CreateNuGetPackage
+Task default -Depends Clean, RunTests, CreateNuGetPackage
+Task appVeyor -Depends Clean, CreateNuGetPackage
 
 Task Restore {
     "Restoring NuGet packages for '$solution'..."
@@ -63,7 +63,7 @@ task UpdateVersion {
 	"[assembly: AssemblyFileVersion(""$assemblyFileVersion"")]" >> $versionAssemblyInfoFile
 }
 
-Task Compile -Depends Clean, Restore, UpdateVersion {
+Task Compile -Depends UpdateVersion {
     "Compiling '$solution'..."
 
 	exec { msbuild /nologo /verbosity:q $sln_file /p:Configuration=$target_config /p:TargetFrameworkVersion=v4.5 /p:Outdir="$output_directory" }
@@ -77,7 +77,7 @@ Task RunTests -Depends Compile {
 	mkdir $dist_directory -ea SilentlyContinue
 }
 
-Task CreateNuGetPackage -Depends RunTests {
+Task CreateNuGetPackage -Depends Compile {
 	"Creating nuget package..."
 
 	$vSplit = $version.Split('.')

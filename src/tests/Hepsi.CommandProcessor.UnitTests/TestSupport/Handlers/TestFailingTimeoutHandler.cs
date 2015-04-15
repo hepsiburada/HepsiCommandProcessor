@@ -20,7 +20,7 @@ namespace Hepsi.CommandProcessor.UnitTests.TestSupport.Handlers
         public static bool TaskCompleted { get; set; }
 
 
-        [TimeoutPolicy(milliseconds: 300, step: 1, timing: HandlerTiming.Before)]
+        [TimeoutPolicy(milliseconds: 100, step: 1, timing: HandlerTiming.Before)]
         public override TestCommand Handle(TestCommand command)
         {
             var ct = (CancellationToken)Context.Bag[TimeoutPolicyHandler<TestCommand>.CONTEXT_BAG_TIMEOUT_CANCELLATION_TOKEN];
@@ -32,7 +32,7 @@ namespace Hepsi.CommandProcessor.UnitTests.TestSupport.Handlers
             }
             try
             {
-                var delay = Task.Delay(500, ct).ContinueWith(
+                var delay = Task.Delay(1000, ct).ContinueWith(
                     x =>
                     {
                         WasCancelled = false;
