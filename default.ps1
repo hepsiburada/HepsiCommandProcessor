@@ -74,6 +74,9 @@ Task RunTests -Depends Compile {
 
 	$project = "Hepsi.CommandProcessor.UnitTests"
 	.$nunit "$output_directory\$project.dll" /noxml
+	if (!$?) {
+	    exit 1
+	}
 }
 
 Task CreateNuGetPackage -Depends Compile {

@@ -1,5 +1,6 @@
 using System;
 using Common.Logging;
+using FluentAssertions;
 using Hepsi.CommandProcessor.Handlers;
 using Hepsi.CommandProcessor.Messaging;
 using Hepsi.CommandProcessor.UnitTests.TestSupport;
@@ -19,6 +20,7 @@ namespace Hepsi.CommandProcessor.UnitTests.CommandProcessors.When_using_decouple
         static Message message;
         static Mock<IAmAMessageStore<Message>> commandRepository;
         static Mock<IAmAClientRequestHandler> messagingGateway;
+        static Exception exception;
 
         [TestFixtureSetUp]
         public void Setup()
@@ -58,13 +60,26 @@ namespace Hepsi.CommandProcessor.UnitTests.CommandProcessors.When_using_decouple
                  commandRepository.Object,
                  messagingGateway.Object,
                  logger);
+
+            try
+            {
+                commandProcessor.Post(testCommand);
+            }
+            catch (Exception ex)
+            {
+                exception = ex;
+            }
+        }
+
+        [Test]
+        public void it_should_throw_a_exception_out_once_all_retries_exhausted()
+        {
+            exception.Should().BeOfType<Exception>();
         }
 
         [Test]
         public void it_should_send_a_message_via_the_messaging_gateway()
         {
-            Assert.Throws<Exception>(() => commandProcessor.Post(testCommand));
-
             messagingGateway.Verify(m => m.Send(message), Times.Exactly(4));
         }
 

@@ -58,6 +58,11 @@ namespace Hepsi.CommandProcessor.UnitTests.Policies.When_sending_a_command_to_th
         public void it_should_send_the_command_to_the_command_handler()
         {
             TestNotFailingDivideByZeroHandler.ShouldRecieve(testCommand).Should().BeTrue();
+        }
+
+        [Test]
+        public void it_should_not_retry()
+        {
             retryCount.Should().Be(0);
         }
     }

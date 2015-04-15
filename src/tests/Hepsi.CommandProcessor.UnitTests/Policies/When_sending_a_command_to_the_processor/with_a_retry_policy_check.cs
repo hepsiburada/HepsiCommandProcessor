@@ -51,13 +51,26 @@ namespace Hepsi.CommandProcessor.UnitTests.Policies.When_sending_a_command_to_th
             TestFailingDivideByZeroHandler.ReceivedCommand = false;
 
             commandProcessor = new CommandProcessor(registry, handlerFactory, new InMemoryRequestContextFactory(), policyRegistry, logger);
+
+            try
+            {
+                commandProcessor.Send(testCommand);
+            }
+            catch (DivideByZeroException)
+            {
+                
+            }
         }
 
         [Test]
         public void it_should_send_the_command_to_the_command_handler()
         {
-            Assert.Throws<DivideByZeroException>(() => commandProcessor.Send(testCommand));
             TestFailingDivideByZeroHandler.ShouldRecieve(testCommand).Should().BeTrue();
+        }
+
+        [Test]
+        public void it_should_retry_three_times()
+        {
             retryCount.Should().Be(3);
         }
     }

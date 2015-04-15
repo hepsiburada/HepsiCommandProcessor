@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Threading.Tasks;
 using Common.Logging;
 using FluentAssertions;
 using Hepsi.CommandProcessor.Handlers;
@@ -16,6 +17,7 @@ namespace Hepsi.CommandProcessor.UnitTests.Policies.When_sending_a_command_to_th
     {
         static CommandProcessor commandProcessor;
         static readonly TestCommand testCommand = new TestCommand();
+        static AggregateException aggregateException;
 
         [TestFixtureSetUp]
         public void Setup()
@@ -35,15 +37,34 @@ namespace Hepsi.CommandProcessor.UnitTests.Policies.When_sending_a_command_to_th
             TestFailingTimeoutHandler.TaskCompleted = true;
 
             commandProcessor = new CommandProcessor(registry, handlerFactory, new InMemoryRequestContextFactory(), new PolicyRegistry(), logger);
+
+            try
+            {
+                commandProcessor.Send(testCommand);
+            }
+            catch (AggregateException ex)
+            {
+                aggregateException = ex;
+            }
         }
 
         [Test]
         public void it_should_throw_a_timeout_exception()
         {
-            var ex = Assert.Throws<AggregateException>(() => commandProcessor.Send(testCommand));
-            ex.InnerExceptions.First().Should().BeOfType<TimeoutException>();
+            aggregateException.InnerExceptions.First().Should().BeOfType<TimeoutException>();
+        }
 
+        [Test]
+        public void it_should_cancel_handler_task()
+        {
+            Task.WaitAll(Task.Delay(100));
             TestFailingTimeoutHandler.WasCancelled.Should().BeTrue();
+        }
+
+        [Test]
+        public void it_should_not_complete_the_task()
+        {
+            Task.WaitAll(Task.Delay(100));
             TestFailingTimeoutHandler.TaskCompleted.Should().BeFalse();
         }
     }
