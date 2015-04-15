@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>Hepsi.CommandProcessor</id>
+    <version>0.0.0</version>
+    <authors>hepsiburada.com (https://github.com/hepsiburadadev)</authors>
+    <licenseUrl>https://raw.githubusercontent.com/hepsiburadadev/HepsiCommandProcessor/master/license.txt</licenseUrl>
+    <projectUrl>https://github.com/hepsiburadadev/HepsiCommandProcessor</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Command Dispatcher, Processor, and Distributed Task Queue. Provides a framework for orthogonal concerns.</description>
+    <copyright>Copyright (c) hepsiburada.com</copyright>
+    <tags>Command Dispatcher Processor Task Queue Orthogonal Hexagonal Architecture Ports Adapters</tags>
+    <dependencies>
+      <group targetFramework=".NETFramework4.5">
+        <dependency id="Common.Logging" version="3.1.0" />
+        <dependency id="Common.Logging.Core" version="3.1.0" />
+        <dependency id="Newtonsoft.Json" version="6.0.1" />
+        <dependency id="Polly" version="2.2.1" />
+      </group>
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="build\Hepsi.CommandProcessor.dll" target="lib\net45" />
+  </files>
+</package>

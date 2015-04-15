@@ -1,0 +1,144 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{773D1047-4EE3-4311-BBE9-F6277402C9D5}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Hepsi.CommandProcessor</RootNamespace>
+    <AssemblyName>Hepsi.CommandProcessor</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\..\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Common.Logging">
+      <HintPath>..\..\packages\Common.Logging.3.1.0\lib\net40\Common.Logging.dll</HintPath>
+    </Reference>
+    <Reference Include="Common.Logging.Core">
+      <HintPath>..\..\packages\Common.Logging.Core.3.1.0\lib\net40\Common.Logging.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\..\packages\Newtonsoft.Json.6.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="Polly">
+      <HintPath>..\..\packages\Polly.2.2.1\lib\net45\Polly.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\Shared\VersionAssemblyInfo.cs">
+      <Link>Properties\VersionAssemblyInfo.cs</Link>
+    </Compile>
+    <Compile Include="Attributes\RequestHandlerAttribute.cs" />
+    <Compile Include="Attributes\RequestLoggingAttribute.cs" />
+    <Compile Include="Attributes\TimeoutPolicyAttribute.cs" />
+    <Compile Include="Attributes\UsePolicyAttribute.cs" />
+    <Compile Include="Builder\INeedAHandlers.cs" />
+    <Compile Include="Builder\INeedARequestContext.cs" />
+    <Compile Include="Builder\INeedLogging.cs" />
+    <Compile Include="Builder\INeedMessaging.cs" />
+    <Compile Include="Builder\INeedPolicy.cs" />
+    <Compile Include="ChannelName.cs" />
+    <Compile Include="Command.cs" />
+    <Compile Include="CommandProcessor.cs" />
+    <Compile Include="Builder\CommandProcessorBuilder.cs" />
+    <Compile Include="Event.cs" />
+    <Compile Include="Extensions\EnumerationExtensions.cs" />
+    <Compile Include="Extensions\ReflectionExtensions.cs" />
+    <Compile Include="Handlers\ExceptionPolicyHandler.cs" />
+    <Compile Include="Handlers\HandlerConfiguration.cs" />
+    <Compile Include="Handlers\HandlerFactory.cs" />
+    <Compile Include="Handlers\HandlerName.cs" />
+    <Compile Include="Handlers\HandlerTiming.cs" />
+    <Compile Include="Handlers\IAmAClientRequestHandler.cs" />
+    <Compile Include="Handlers\IAmAServerRequestHandler.cs" />
+    <Compile Include="Handlers\RequestHandler.cs" />
+    <Compile Include="Handlers\RequestHandlers.cs" />
+    <Compile Include="Handlers\RequestLoggingHandler.cs" />
+    <Compile Include="Handlers\TimeoutPolicyHandler.cs" />
+    <Compile Include="IAmAChannel.cs" />
+    <Compile Include="IAmAChannelFactory.cs" />
+    <Compile Include="IAmACommandProcessor.cs" />
+    <Compile Include="Builder\IAmACommandProcessorBuilder.cs" />
+    <Compile Include="IAmAHandlerFactory.cs" />
+    <Compile Include="IAmALifetime.cs" />
+    <Compile Include="IAmAnInputChannel.cs" />
+    <Compile Include="IAmAnOutputChannel.cs" />
+    <Compile Include="IAmAPipelineBuilder.cs" />
+    <Compile Include="IAmAPipelineTracer.cs" />
+    <Compile Include="IAmAPolicyRegistry.cs" />
+    <Compile Include="IAmARequestContextFactory.cs" />
+    <Compile Include="IAmASubscriberRegistry.cs" />
+    <Compile Include="ICommand.cs" />
+    <Compile Include="IHandleRequests.cs" />
+    <Compile Include="InMemoryRequestContextFactory.cs" />
+    <Compile Include="InputChannel.cs" />
+    <Compile Include="Interpreter.cs" />
+    <Compile Include="IRequest.cs" />
+    <Compile Include="IRequestContext.cs" />
+    <Compile Include="LifetimeScope.cs" />
+    <Compile Include="Messaging\IAmAMessageMapper.cs" />
+    <Compile Include="Messaging\IAmAMessageMapperFactory.cs" />
+    <Compile Include="Messaging\IAmAMessageMapperRegistry.cs" />
+    <Compile Include="Messaging\IAmAMessageStore.cs" />
+    <Compile Include="Messaging\Message.cs" />
+    <Compile Include="Messaging\MessageBody.cs" />
+    <Compile Include="Messaging\MessageFactory.cs" />
+    <Compile Include="Messaging\MessageHeader.cs" />
+    <Compile Include="Messaging\MessageMapperRegistry.cs" />
+    <Compile Include="Messaging\MessageType.cs" />
+    <Compile Include="Messaging\MessagingConfiguration.cs" />
+    <Compile Include="PipelineBuilder.cs" />
+    <Compile Include="Pipelines.cs" />
+    <Compile Include="PipelineTracer.cs" />
+    <Compile Include="PolicyRegistry.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RequestContext.cs" />
+    <Compile Include="SubscriberRegistry.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('$(SolutionDir)\.nuget\NuGet.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\.nuget\NuGet.targets'))" />
+  </Target>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
